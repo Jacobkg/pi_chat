@@ -8,7 +8,13 @@
 
 <form id="message-form">
   <p><input id="username" type="text" size="10" name="username" placeholder="username"/>
-    <input id="font" type="text" size="10" name="font" placeholder="font" /></p>
+  <select id="font" name="font">
+    <option value="helvetica">Helvetica</option>
+    <option value="monospace">Monospace</option>
+    <option value="impact">Impact</option>
+    <option value="futura">Futura</option>
+  </select>
+  </p>
   <input id="message" type="text" size="50" name="message", placeholder="message" autofocus="autofocus" />
   <input type="submit" id="chat-submit" value="Submit"/> 
 </form>
