@@ -1,0 +1,19 @@
+<h1>Local Chat Room</h1>
+
+<div id="chat-room">
+  <% @chats.each do |chat| %>
+    <p>(<%= chat['time']%>) <%= chat['sent_by'] %> : <%= chat['body'] %></p> 
+  <% end %>
+</div>
+
+<form id="message-form">
+  <p><input id="username" type="text" size="10" name="username" placeholder="username"/>
+    <input id="font" type="text" size="10" name="font" placeholder="font" /></p>
+  <input id="message" type="text" size="50" name="message", placeholder="message" autofocus="autofocus" />
+  <input type="submit" id="chat-submit" value="Submit"/> 
+</form>
+<br>
+<br>
+<br>
+<br>
+<br>
