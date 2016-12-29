@@ -2,7 +2,7 @@
 
 <div id="chat-room">
   <% @chats.each do |chat| %>
-    <p>(<%= chat['time']%>) <%= chat['sent_by'] %> : <%= chat['body'] %></p> 
+    <p>(<%= chat['time']%>) <%= chat['sent_by'] %> : <span style="font-family:<%=chat['font']%>"><%= chat['body'].html_safe %></span></p> 
   <% end %>
 </div>
 
