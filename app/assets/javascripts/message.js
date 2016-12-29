@@ -1,5 +1,7 @@
 $( document ).ready(function() {
-  console.log("Enabling Button");
+  window.addEventListener("focus", function(event) {
+    document.title = "PiChat";
+  });
 
   $('#message-form').submit(function() {
     var username = $('#username').val();
