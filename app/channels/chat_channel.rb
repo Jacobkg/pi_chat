@@ -40,7 +40,8 @@ class ChatChannel < ApplicationCable::Channel
   def forecast
     weather = HTTParty.get "https://api.darksky.net/forecast/#{$keys['forecast']}/#{$server_lat},#{$server_lng}"
     temp = weather['currently']['temperature'].to_i
+    current = weather['currently']['summary']
     summary = weather['hourly']['summary']
-    "#{temp}° F - #{summary}"
+    "#{temp}° F #{current} - #{summary}"
   end
 end
