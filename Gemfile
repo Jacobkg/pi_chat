@@ -8,6 +8,8 @@ end
 gem 'random-word', '~> 1.3' 
 gem 'gemoji'
 gem 'yelp', require: 'yelp'
+gem 'macaddr'
+gem 'httparty'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.1'

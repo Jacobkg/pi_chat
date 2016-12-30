@@ -31,7 +31,8 @@ class ChatChannel < ApplicationCable::Channel
   end
 
   def yelp(term)
-    business = Yelp.client.search('321 21st Street, Santa Monica, CA', { term: term, sort: 2, limit: 10 }).businesses.sample
+    coord = { latitude: $server_lat, longitude: $server_lng}
+    business = Yelp.client.search_by_coordinates(coord, { term: term, sort: 2, limit: 10 }).businesses.sample
     "<a href=\"#{business.url}\">#{business.name}</a>".html_safe
   end
 end
