@@ -19,6 +19,8 @@ class ChatChannel < ApplicationCable::Channel
     data['body'].gsub!('[emoji|food]') { |x| EMOJI.select {|x| x.category == 'Foods'}.sample.raw }
     data['body'].gsub!('[emoji|activity]') { |x| EMOJI.select {|x| x.category == 'Activity'}.sample.raw }
     data['body'].gsub!('[emoji|place]') { |x| EMOJI.select {|x| x.category == 'Places'}.sample.raw }
+    data['body'].gsub!(/\[yelp\|(.*)\]/) {|x| yelp($1) }
+    
     $chats ||= []
     $chats << data
     ActionCable.server.broadcast("chat_home", data)
@@ -26,5 +28,10 @@ class ChatChannel < ApplicationCable::Channel
 
   def color_wrap(str)
     "<span style=\"color: #4ca9d4\">#{str}</span>"
+  end
+
+  def yelp(term)
+    business = Yelp.client.search('321 21st Street, Santa Monica, CA', { term: term, sort: 2, limit: 10 }).businesses.sample
+    "<a href=\"#{business.url}\">#{business.name}</a>".html_safe
   end
 end
