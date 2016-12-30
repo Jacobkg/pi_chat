@@ -20,6 +20,7 @@ class ChatChannel < ApplicationCable::Channel
     data['body'].gsub!('[emoji|activity]') { |x| EMOJI.select {|x| x.category == 'Activity'}.sample.raw }
     data['body'].gsub!('[emoji|place]') { |x| EMOJI.select {|x| x.category == 'Places'}.sample.raw }
     data['body'].gsub!(/\[yelp\|(.*)\]/) {|x| yelp($1) }
+    data['body'].gsub!('[weather]') { |x| color_wrap(forecast) }
     
     $chats ||= []
     $chats << data
@@ -32,7 +33,14 @@ class ChatChannel < ApplicationCable::Channel
 
   def yelp(term)
     coord = { latitude: $server_lat, longitude: $server_lng}
-    business = Yelp.client.search_by_coordinates(coord, { term: term, sort: 2, limit: 10 }).businesses.sample
+    business = Yelp.client.search_by_coordinates(coord, { term: term }).businesses.sample
     "<a href=\"#{business.url}\">#{business.name}</a>".html_safe
+  end
+
+  def forecast
+    weather = HTTParty.get "https://api.darksky.net/forecast/#{$keys['forecast']}/#{$server_lat},#{$server_lng}"
+    temp = weather['currently']['temperature'].to_i
+    summary = weather['hourly']['summary']
+    "#{temp}° F - #{summary}"
   end
 end
